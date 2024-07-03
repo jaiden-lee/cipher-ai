@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# firebase private key
+leetcode-ai-d4de1-firebase-adminsdk-m0mqj-dff053b8ce.json
