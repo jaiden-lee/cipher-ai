@@ -1,7 +1,8 @@
 import "@/styles/globals.css";
 //Next/React
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 // Types
 import type { AppProps } from "next/app";
 // Libaries
@@ -12,6 +13,7 @@ import { inter } from "@/utils/fonts"; // Inter font
 import { auth } from "@/utils/firebase"; // Auth object from firebase, which keeps track of logged in user
 // Components
 import Navbar from "@/components/Navigation/Navbar";
+const GenericLoading = dynamic(() => import("@/components/Loading/GenericLoading"), {ssr: false});
 
 
 /**
@@ -23,9 +25,14 @@ export default function App({ Component, pageProps }: AppProps) {
   const [user, loading, error] = useAuthState(auth); // pass in the firebase auth object, which keeps track of user info, and useAuthState returns it to you
   const router = useRouter();
 
+  const [pageLoading, setPageLoading] = useState(false);
+
   // REDIRECTING USERS
   useEffect(() => {
     // Redirect to home page
+    if (loading) {
+      return;
+    } // this prevents the app from redirecting user to landing page on refresh since auth is still loading
     if (user) {
       if (router.pathname == "/" || router.pathname == "/login" || router.pathname == "/signup" || router.pathname == "/reset") {
         router.push("/home");
@@ -37,7 +44,6 @@ export default function App({ Component, pageProps }: AppProps) {
       }
     }
   }, [user, loading, router]); // reruns when the user changes, the auth finishes loading in user, or the URL changes (router)
-  
 
   // Listens for changes in firebase JWT, and sets it as a cookie
   useEffect(() => {
@@ -54,8 +60,33 @@ export default function App({ Component, pageProps }: AppProps) {
     return unsubscribe;
   }, []);
 
+  // Listens for route change, and if route changes, displays the loading component
+  useEffect(() => {
+    const handleRouteChangeStart = () => {
+      setPageLoading(true);
+    };
+
+    const handleRouteChangeComplete = () => {
+      setPageLoading(false);
+    };
+
+    router.events.on('routeChangeStart', handleRouteChangeStart);
+    router.events.on('routeChangeComplete', handleRouteChangeComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart);
+      router.events.off('routeChangeComplete', handleRouteChangeComplete);
+    };
+
+  }), [router];
+  
+  // if (loading || pageLoading) {
+  //   return <GenericLoading />
+  // }
+
   return (
     <div className={`${inter.className} antialiased`}>
+      {(loading || pageLoading) && <GenericLoading />}
       <Navbar user={user} />
       <div className="box-border px-6">
         <Component {...pageProps} />

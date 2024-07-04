@@ -1,6 +1,7 @@
 // Next/React
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 // Types
 import type { GetServerSidePropsContext } from "next";
 import type { ProblemCardData } from "@/components/ProblemCard/ProblemCard";
@@ -11,7 +12,6 @@ import { FieldPath } from "firebase-admin/firestore";
 import {auth, firestore} from "@/utils/firebase-server"; // can import server packages since NextJS separates the server bundle and client bundle when compiling
 import { batchDocuments } from "@/utils/firestore-helper-functions";
 import { outfit } from "@/utils/fonts";
-import dynamic from "next/dynamic";
 // Components
 const ProblemCard = dynamic(() => import("@/components/ProblemCard/ProblemCard"), {ssr: false}); 
 /* Need to load this as a client only component since it causes hydration error due to the way I did the media queries
