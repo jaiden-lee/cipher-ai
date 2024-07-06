@@ -1,8 +1,12 @@
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+// Use MaterialUI for loading bars
+
 function GenericLoading() {
     return (
-        <div>
-            <h1>Loading</h1>
-        </div>
+        <Box sx={{ width: '100%' }} className="absolute">
+            <LinearProgress />
+        </Box>
     );
 }
 

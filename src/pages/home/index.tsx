@@ -1,6 +1,7 @@
 // Next/React
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 // Types
 import type { GetServerSidePropsContext } from "next";
 import type { ProblemCardData } from "@/components/ProblemCard/ProblemCard";
@@ -11,7 +12,7 @@ import { FieldPath } from "firebase-admin/firestore";
 import {auth, firestore} from "@/utils/firebase-server"; // can import server packages since NextJS separates the server bundle and client bundle when compiling
 import { batchDocuments } from "@/utils/firestore-helper-functions";
 import { outfit } from "@/utils/fonts";
-import dynamic from "next/dynamic";
+import { problemInfo } from "@/utils/problems-server"; // only use in getServerSideProps
 // Components
 const ProblemCard = dynamic(() => import("@/components/ProblemCard/ProblemCard"), {ssr: false}); 
 /* Need to load this as a client only component since it causes hydration error due to the way I did the media queries
@@ -45,7 +46,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         // you can only get up to 10 documents at a time
         if (starredProblemIDs && solvedProblemIDs) {
             const solvedSet = new Set(solvedProblemIDs); // convert to a set, so we can do O(1) look up to check if user completed
-            const batches = batchDocuments(starredProblemIDs, 10);
+            const starredSet = new Set(starredProblemIDs);
+            /*const batches = batchDocuments(starredProblemIDs, 10);
             // Loops through all batches and gets the problems
             for (let batch of batches) {
                 const batchRef = firestore.collection("problems").where(FieldPath.documentId(), "in", batch);
@@ -69,8 +71,24 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                 }).catch((error) => {
                     console.log(error); // just basically skips over this set of documents
                 });
+            }*/
+            const documents = Object.entries(problemInfo);
+            for (let [id, problem] of documents) {
+                const pid = id;
+                const problemName = problem.title;
+                const difficulty = problem.difficulty;
+
+                if (pid && difficulty && problemName && starredSet.has(pid)) {
+                    const completed = solvedSet.has(pid);
+                    const problem: ProblemCardData = {
+                        problemId: pid,
+                        problemName: problemName,
+                        difficulty: difficulty,
+                        completed: completed
+                    };
+                    starredProblems.push(problem);
+                }
             }
-            
         }
         return {
             props: {
