@@ -207,7 +207,7 @@ ${props.problem?.constraints}
             }
             codeLoaded.current = true;
         }
-    }, []);
+    }, [props.problem]);
 
     // Everytime code changes, it will wait .5 seconds before updating localStorage; if update occurs, resets timer
     useEffect(() => {
@@ -220,7 +220,7 @@ ${props.problem?.constraints}
     
             return () => clearTimeout(timeoutFunc);
         }
-    }, [code]);
+    }, [code, props.problem]);
 
     function resetCode() {
         if (props.problem) {
@@ -320,7 +320,7 @@ ${props.problem?.constraints}
                             </form> 
                         </div> :
                         <div className="flex justify-center w-full">
-                            <h3 className="text-blue-header font-semibold text-center">Please sign in to user Cipher's AI capabilities</h3>
+                            <h3 className="text-blue-header font-semibold text-center">Please sign in to user {"Cipher's"} AI capabilities</h3>
                         </div>
                     }
                     
