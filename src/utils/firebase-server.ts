@@ -7,13 +7,20 @@
 import * as admin from "firebase-admin";
 
 // Initialize Firebase
-const serviceAccount = require("@/leetcode-ai-d4de1-firebase-adminsdk-m0mqj-dff053b8ce.json"); // eventually convert this to base64 and put as an environment variable
+// const serviceAccount = require("@/leetcode-ai-d4de1-firebase-adminsdk-m0mqj-dff053b8ce.json"); // eventually convert this to base64 and put as an environment variable
+const serviceAccount = process.env.FIREBASE_PRIVATE_KEY;
+if (!serviceAccount) {
+    throw Error("API KEY DOESN'T EXIST");
+}
+const serviceAccountJSON = JSON.parse(serviceAccount);
+
 let app: admin.app.App;
+
 
 if (admin.apps.length === 0 || !admin.apps[0]) {
 // Initialize a new app instance
     app = admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
+        credential: admin.credential.cert(serviceAccountJSON),
     });
 } else {
 // Retrieve an existing app instance
