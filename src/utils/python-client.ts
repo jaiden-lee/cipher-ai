@@ -2,7 +2,7 @@ import { loadPyodide } from "pyodide";
 import { TestCase } from "./problemInfoType";
 
 export default async function runPython(problemData: {starterFunctionName: string, test_cases: TestCase[], comparisonCode: string}, code: string) {
-    const pyodide = await loadPyodide();
+    const pyodide = await loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js' })
     const functionName = problemData.starterFunctionName; // used to call the user written function
     try {
         const setupStr = `
