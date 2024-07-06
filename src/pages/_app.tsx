@@ -85,10 +85,10 @@ export default function App({ Component, pageProps }: AppProps) {
   // }
 
   return (
-    <div className={`${inter.className} antialiased`}>
+    <div className={`${inter.className} antialiased h-[100dvh]`}>
       {(loading || pageLoading) && <GenericLoading />}
       <Navbar user={user} />
-      <div className="box-border px-6">
+      <div className="box-border px-6 flex-1">
         <Component {...pageProps} />
       </div>
     </div>

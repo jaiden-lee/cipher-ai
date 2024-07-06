@@ -6,4 +6,40 @@
     .button-primary {
         @apply text-white bg-blue-primary px-4 py-2 rounded-md transition-all hover:scale-[1.025] active:scale-[.975];
     }
+	.button-secondary {
+		@apply border-[1px] border-gray-stroke rounded-xl font-semibold py-1 px-4 text-blue-header transition-all hover:scale-[1.025] active:scale-[.975];
+	}
+}
+
+code {
+    @apply bg-gray-stroke rounded-sm px-1;
+}
+
+.gutter {
+	/* background-color: rgb(26, 26, 26); */
+	background-repeat: no-repeat;
+	background-position: 50%;
+    @apply bg-gray-stroke;
+}
+.gutter:hover {
+	@apply bg-gray-text-light;
+}
+
+.gutter.gutter-horizontal {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==");
+	cursor: col-resize;
+}
+
+.gutter.gutter-vertical {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=");
+	cursor: row-resize;
+    @apply w-full;
+}
+
+.cm-scroller,
+.cm-gutters {
+    background-color: transparent !important;
+}
+.cm-focused {
+	outline: none !important;
 }
