@@ -108,7 +108,7 @@ function LoginPage() {
                 </form>
                 {/* Footer */}
                 <div className="mt-4">
-                    <p className="text-center">Don't have an account? <Link href="/signup" className="text-blue-primary hover:underline">Sign up here.</Link></p>
+                    <p className="text-center">{"Don't have an account?"} <Link href="/signup" className="text-blue-primary hover:underline">Sign up here.</Link></p>
                     <p className="text-center">Forgot your password? <Link href="/reset" className="text-blue-primary hover:underline">Reset it here.</Link></p>
                 </div>
             </div>
