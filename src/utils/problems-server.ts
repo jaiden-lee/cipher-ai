@@ -31,7 +31,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
         test_cases: [
             {
                 id: 1,
-                input: "prices = [7,1,5,3,6,4]",
+                input: {prices: [7,1,5,3,6,4]},
                 displayInput: {
                     prices: "[7,1,5,3,6,4]"
                 },
@@ -39,7 +39,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
             },
             {
                 id: 2,
-                input: "prices = [7,6,4,3,1]",
+                input: {prices: [7,6,4,3,1]},
                 displayInput: {
                     prices: "[7,6,4,3,1]"
                 },
@@ -51,7 +51,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
             "<code>0 <= prices.length <= 10^4</code>"
         ],
         starterCode: `def maxProfit(prices):`,
-        starterFunctionName: "maxProfit(prices)",
+        starterFunctionName: "maxProfit",
         starterFunctionParams: ["prices"],
         comparisonCode: 
 `def equals(result, output):
@@ -85,7 +85,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
         test_cases: [
             {
                 id: 1,
-                input: "height = [1,8,6,2,5,4,8,3,7]",
+                input: {height: [1,8,6,2,5,4,8,3,7]},
                 displayInput: {
                     height: "[1,8,6,2,5,4,8,3,7]"
                 },
@@ -93,7 +93,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
             },
             {
                 id: 2,
-                input: "height = [1,1]",
+                input: {height: [1,1]},
                 displayInput: {
                     height: "[1,1]"
                 },
@@ -106,7 +106,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
             "<code>0 <= height[i] <= 10^4</code>"
         ],
         starterCode: `def maxArea(height):`,
-        starterFunctionName: "maxArea(height)",
+        starterFunctionName: "maxArea",
         starterFunctionParams: ["height"],
         comparisonCode: 
 `def equals(result, output):
@@ -136,7 +136,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
         test_cases: [
             {
                 id: 1,
-                input: "nums = [3,2,1,0,4]",
+                input: {nums: [3,2,1,0,4]},
                 displayInput: {
                     nums: "[3,2,1,0,4]"
                 },
@@ -144,7 +144,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
             },
             {
                 id: 2,
-                input: "nums = [3,2,1,0,4]",
+                input: {nums: [3,2,1,0,4]},
                 displayInput: {
                     nums: "[3,2,1,0,4]"
                 },
@@ -156,7 +156,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
             "<code>0 <= nums[i] <= 10^5</code>",
         ],
         starterCode: `def canJump(nums):`,
-        starterFunctionName: "canJump(nums)",
+        starterFunctionName: "canJump",
         starterFunctionParams: ["nums"],
         comparisonCode: 
 `def equals(result, output):
@@ -192,7 +192,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
         test_cases: [
             {
                 id: 1,
-                input: `nums = [2,7,11,15]\ntarget = 9`,
+                input: {nums: [2,7,11,15],target: 9},
                 displayInput: {
                     nums: "[2,7,11,15]",
                     target: "9"
@@ -201,7 +201,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
             },
             {
                 id: 2,
-                input: "nums = [3,2,4]\ntarget = 6",
+                input: {nums: [3,2,4], target: 6},
                 displayInput: {
                     nums: "[3,2,4]",
                     target: "6"
@@ -210,7 +210,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
             },
             {
                 id: 3,
-                input: "nums = [3,3]\ntarget = 6",
+                input: {nums: [3,3], target: 6},
                 displayInput: {
                     nums: "[3,3]",
                     target: "6"
@@ -225,7 +225,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
             "<strong>Only one valid answer exists.</strong>"
         ],
         starterCode: `def twoSum(nums, target):`,
-        starterFunctionName: "twoSum(nums, target)",
+        starterFunctionName: "twoSum",
         starterFunctionParams: ["nums", "target"],
         comparisonCode: 
 `def equals(result, output):

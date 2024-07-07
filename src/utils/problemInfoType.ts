@@ -10,7 +10,7 @@ export type ProblemExample = {
 
 export type TestCase = {
     id: number,
-    input: string, // directly initializes the input parameters in code
+    input: Record<string, any>, // directly initializes the input parameters in code
     displayInput?: Record<string, string>, // if exists, displayed as an example to user
     output: any,
 }
