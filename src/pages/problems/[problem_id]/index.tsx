@@ -7,6 +7,7 @@ import type { ProblemExample, TestCase } from "@/utils/problemInfoType";
 import Split from "react-split";
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
+import { javascript } from "@codemirror/lang-javascript";
 import nookies from "nookies";
 import axios from "axios";
 // Utils
@@ -29,10 +30,8 @@ type CodingProblemProps = {
         constraints: string[],
         examples: ProblemExample[],
         starterCode: string,
-        test_cases: TestCase[],
         isStarred: boolean,
         starterFunctionName: string,
-        comparisonCode: string
     }
 }
 
@@ -73,10 +72,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                         constraints: problem.constraints,
                         examples: problem.examples,
                         starterCode: problem.starterCode,
-                        test_cases: problem.test_cases,
                         isStarred: isStarred,
                         starterFunctionName: problem.starterFunctionName,
-                        comparisonCode: problem.comparisonCode
                     }
                 }
                 
@@ -234,11 +231,10 @@ ${props.problem?.constraints}
             if (!running) {
                 setRunning(true);
                 try {
-                    const res = await axios.post("/api/runpython", {
+                    const res = await axios.post("/api/runjs", {
                         starterFunctionName: props.problem.starterFunctionName,
-                        test_cases: props.problem.test_cases,
-                        comparisonCode: props.problem.comparisonCode,
-                        code: code
+                        userCode: code,
+                        problemId: props.problem.id
                     }, {
                         timeout: 10000
                     });
@@ -333,13 +329,13 @@ ${props.problem?.constraints}
                 <div className="w-full h-full overflow-auto flex flex-col">
                     {/* Top bar */}
                     <div className="box-border py-2 px-6 flex items-center border-b-[1px] border-gray-stroke">
-                        <button className="button-secondary">Python</button>
+                        <button className="button-secondary">JavaScript</button>
                         <button className="ml-auto text-blue-primary font-semibold hover:text-cyan-600 transition-colors" onClick={resetCode}>Reset</button>
                     </div>
                     <CodeMirror
                             value={code}
                             onChange={(value: string) => setCode(value)}
-                            extensions={[python()]}
+                            extensions={[javascript()]}
                             style={{ fontSize: "16px"}}
                         />
                     <div className="box-border py-2 px-6 flex items-center mt-auto border-t-[1px] border-gray-stroke">
