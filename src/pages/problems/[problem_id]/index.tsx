@@ -10,12 +10,13 @@ import { python } from "@codemirror/lang-python";
 import { javascript } from "@codemirror/lang-javascript";
 import nookies from "nookies";
 import axios from "axios";
+import { getDoc, arrayUnion, doc, updateDoc } from "firebase/firestore";
 // Utils
 // import runPython from "@/utils/python-client";
 import { problemInfo } from "@/utils/problems-server";
 import { outfit } from "@/utils/fonts";
 import { auth as serverAuth, firestore as serverFirestore } from "@/utils/firebase-server"; // only for verifying JWT
-import {auth as clientAuth} from "@/utils/firebase";
+import {auth as clientAuth, firestore as clientFirestore} from "@/utils/firebase";
 // Components
 import ProblemDescription from "@/components/CodingProblemPage/ProblemDescription";
 
@@ -123,10 +124,6 @@ Your name is Cipher. You help the user solve coding interview questions by clari
 
 DO NOT provide the answer to the user. You are only to help the user, not to give them the answer.
 
-Use <code></code> if you want to surround text and emphasize text, and type <br><br> if you want to put text on a new line. 
-
-If you want to create a numbered list, make sure to put <br><br> in between each list element.
-
 Here is the problem name:
 ${props.problem?.title}
 
@@ -156,7 +153,16 @@ ${props.problem?.constraints}
             "content": [
                 {
                     "type": "text",
-                    "text": `Here is my code:\n${code}\n\n${currentMessage}`
+                    "text": `Here is my code:
+${code}
+
+Use <code></code> if you want to surround text and emphasize text, and type <br><br> if you want to put text on a new line. 
+
+If you want to bold text, use <strong></strong> around text, rather than **
+
+If you want to create a numbered list, make sure to put <br><br> in between each list element.
+
+Question: ${currentMessage}`
                 }
             ]
         }]
@@ -238,6 +244,21 @@ ${props.problem?.constraints}
                     }, {
                         timeout: 10000
                     });
+                    try {
+                        if (res.data.success && clientAuth.currentUser) {
+                            const userDocRef = doc(clientFirestore, "users", clientAuth.currentUser.uid);
+                            const userDoc = await getDoc(userDocRef);
+                            if (userDoc.exists()) {
+                                if (!userDoc.data().starredProblems.includes(props.problem.id)) {
+                                    await updateDoc(userDocRef, {
+                                        solvedProblems: arrayUnion(props.problem.id)
+                                    });
+                                } 
+                            }
+                            
+                        }
+                    } catch (e) {} // do nothing
+                    
                     setCodeOutput(res.data.message || "");
                 } catch (e) {
                     console.log("TIME OUT");
