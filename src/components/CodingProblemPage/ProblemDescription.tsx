@@ -15,7 +15,6 @@ type CodingProblemType = {
         constraints: string[],
         examples: ProblemExample[],
         starterCode: string,
-        test_cases: TestCase[],
         isStarred: boolean
     }
 }

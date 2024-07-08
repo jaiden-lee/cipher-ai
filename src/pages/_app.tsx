@@ -8,6 +8,7 @@ import type { AppProps } from "next/app";
 // Libaries
 import { useAuthState } from "react-firebase-hooks/auth"; // we can tell whether or not user is logged in
 import nookies from "nookies"; // store firebase auth token as a cookie, so it gets sent to server
+import {Analytics} from "@vercel/analytics/react";
 // Utils
 import { inter } from "@/utils/fonts"; // Inter font
 import { auth } from "@/utils/firebase"; // Auth object from firebase, which keeps track of logged in user
@@ -91,6 +92,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <div className="box-border px-6 flex-1">
         <Component {...pageProps} />
       </div>
+
+      <Analytics />
     </div>
   );
 }

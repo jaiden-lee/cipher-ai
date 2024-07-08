@@ -21,11 +21,7 @@ export type ProblemInfoType = {
     title: string,
     description: string,
     examples: ProblemExample[],
-    test_cases: TestCase[],
     constraints: string[],
     starterCode: string,
     starterFunctionName: string,
-    starterFunctionParams: string[], // determines order to pass in aprameters to function
-    comparisonCode: string, // just in case you have a case where you have to compare arrays and order doesn't matter or smth
-    codeSetup?: string
 }
