@@ -1,12 +1,14 @@
 // Next/React
 import { useState, useTransition, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 // Types
 import type { ChangeEvent, FormEvent } from "react";
 // Libraries
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import axios from "axios";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 // Utils
 import { outfit } from "@/utils/fonts";
 import {auth} from "@/utils/firebase";
@@ -118,14 +120,52 @@ function SignupPage() {
         }
     }
 
+    async function googleSignIn() {
+        if (!isPending) {
+            const provider = new GoogleAuthProvider();
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const JWT = await result.user.getIdToken();
+                const displayName = result.user.displayName;
+                const email = result.user.email;
+                
+                try {
+                    const res = await axios.post("/api/createuserwithgoogle", {
+                        token: JWT,
+                        displayName: displayName,
+                        email: email
+                    });
+                    console.log(res.data);
+                } catch (e) {
+                    console.log(e);
+                }
+            } catch (e) {
+                console.log(e);
+            }
+            
+        }
+    }
+
     return (
-        <div className="w-full flex justify-center items-center min-h-[80vh]">
+        <div className="w-full flex justify-center items-center min-h-[80vh] mt-4">
             <div className="max-w-[32rem] w-full bg-white border-gray-stroke rounded-lg shadow-center p-10 text-blue-header">
                 <h1 className={`${outfit.className} text-center text-2xl font-semibold mb-6`}>Sign up for Cipher!</h1>
                 {
                     submissionError !== "" &&
                     <p className="text-center p-2 bg-red-400 text-white rounded-md mb-4">{submissionError}</p>
                 }
+                {/* OAuth sign in */}
+                <div className="flex flex-col">
+                    {/* Google */}
+                    <button className="button-secondary py-2 text-blue-header font-medium rounded-md flex justify-center items-center gap-2" onClick={googleSignIn}>
+                        <Image src="/icons/google-logo.svg" width={800} height={800} alt="Sign up with Google" className="w-6"/> 
+                        Sign up with Google
+                    </button>
+                </div>
+                
+                <hr className="mt-4 mb-4 border-gray-stroke" />
+
+                {/* Email password sign in  */}
                 <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
                     {/* Email */}
                     <div className="flex flex-col">

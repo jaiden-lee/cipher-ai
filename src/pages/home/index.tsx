@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 // Types
 import type { GetServerSidePropsContext } from "next";
 import type { ProblemCardData } from "@/components/ProblemCard/ProblemCard";
@@ -149,7 +150,9 @@ function HomePage(props: HomeProps) {
         <div className="flex flex-col gap-4 py-6 px-4">
             <h1 className={`${outfit.className} text-blue-header text-3xl font-semibold`}>Home</h1>
             <Link href="/profile" className="flex items-center justify-start gap-8">
-                <div className="aspect-square max-w-24 w-full bg-gray-stroke rounded-full"></div>
+                <div className="aspect-square max-w-24 w-full bg-gray-stroke rounded-full flex justify-center items-center">
+                    <Image src="icons/pfp.svg" width={43} height={55} alt="Profile picture" className="w-[50%] fill-current"/>
+                </div>
                 <h2 className={`${outfit.className} text-blue-header text-2xl font-semibold`}>Welcome back, {(props.displayName !== "") ? props.displayName : "User"}!</h2>
             </Link>
 

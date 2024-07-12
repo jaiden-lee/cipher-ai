@@ -44,7 +44,9 @@ function Navbar (props: NavbarProps) {
 
             {
                 user &&
-                <button className="ml-auto w-12 bg-gray-stroke rounded-full aspect-square" onClick={handleProfileClick}></button>
+                <button className="ml-auto w-12 bg-gray-stroke rounded-full aspect-square flex justify-center items-center" onClick={handleProfileClick}>
+                    <Image src="/icons/pfp.svg" width={43} height={55} alt="Profile picture" className="w-[50%] fill-current"/>
+                </button>
             }
 
             {
